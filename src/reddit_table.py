@@ -75,9 +75,19 @@ def __write_text_table(table, has_console=False):
     print("Saved reddit table at " + file_to_write)
 
 
+def __sort_list_by_percent(game_list, hasConsole=False):
+    if hasConsole:
+        index = 2
+    else:
+        index = 1
+
+    return sorted(game_list, key = lambda game_list: game_list[index], reverse=True)
+
+
 if __name__ == '__main__':
     games = read_list(True)
-    table = parse_table(games)
+    sorted = __sort_list_by_percent(games, True)
+    table = parse_table(sorted)
     __write_text_table(table, True)
 else:
     PATH += "/src"
