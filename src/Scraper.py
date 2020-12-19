@@ -4,6 +4,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 import re
+import random
+import time
 
 
 class Scraper:
@@ -14,14 +16,16 @@ class Scraper:
         self.list_of_games = []
         self.list_of_non_games = []
         self.next_page_button_enabled = False
+        self.rangeToSleep = [0.8, 3.3]
 
     def start(self):
         self.driver = webdriver.Chrome(self.pathToBrowserDriver)
-        self.driver.get("https://store.playstation.com/en-us/category/497544f5-a512-4d08-95a3-dbf798e24bc9/1")
+        self.driver.get("https://store.playstation.com/en-us/category/35027334-375e-423b-b500-0d4d85eff784/1")
         assert "Official PlayStation™Store US" in self.driver.title
         self.driver.implicitly_wait(15)
 
         while True:
+            sleep_time = random.uniform(self.rangeToSleep[0], self.rangeToSleep[1])
             WebDriverWait(self.driver, 30).until(
                 EC.visibility_of_element_located((By.CSS_SELECTOR,
                                                   "#main > section > div > div > ul > li:nth-child(1) > div > a > div > div.ems-sdk-product-tile-image__container > span.psw-illustration.psw-illustration--default-product-image.default-product-img"))
@@ -83,6 +87,9 @@ class Scraper:
 
             if not self.next_page_button_enabled:
                 break
+
+            print("Sleeping for " + str(sleep_time) + "ms")
+            time.sleep(sleep_time)
             self.click_next_page()
 
         self.driver.close()
