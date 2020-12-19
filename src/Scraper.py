@@ -38,7 +38,7 @@ class Scraper:
                 split_text = self.splitStringByNewlines(game.text)
 
                 if not self.hasConsole(split_text):
-                    print("Missing console - possible DLC", end=": ")
+                    print("Missing console", end=": ")
                     print(split_text)
                     non_game = True
 
@@ -70,7 +70,7 @@ class Scraper:
                     elif self.get_console_index(split_text) == 0:
                         consoles.append(split_text[0])
                 except ValueError:
-                    print("skipping adding consoles")
+                    pass
 
                 if not non_game:
                     game_list.append(consoles)
