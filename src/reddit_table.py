@@ -59,12 +59,25 @@ def parse_table(game_list):
             console = "N/A"
 
         rows += title + "|" + discount + "|" + sale + "|" + retail + "|" + console + "\n"
-    return table + '\n' + table_alignment + '\n' + rows
+    text_block = table + '\n' + table_alignment + '\n' + rows
+    return text_block
+
+
+def __write_text_table(table, has_console=False):
+    if has_console:
+        file_to_write = PATH + "/table.txt"
+    else:
+        file_to_write = PATH + "/table_no_console.txt"
+
+    with open(file_to_write, "w") as text_file:
+        text_file.write("%s" % table)
+
+    print("Saved reddit table at " + file_to_write)
 
 
 if __name__ == '__main__':
     games = read_list(True)
     table = parse_table(games)
-    print(table)
+    __write_text_table(table, True)
 else:
     PATH += "/src"
