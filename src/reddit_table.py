@@ -1,24 +1,28 @@
 # input: array in the following format
 # [[N]?, String, String, String, String]
 import pickle
+import os
+PATH = os.getcwd()
 
 
 def write_list(game_list, has_console=False):
     if has_console:
-        name_of_file = "src/game_list.txt"
+        name_of_file = PATH + "/game_list"
     else:
-        name_of_file = "src/game_list_no_console.txt"
+        name_of_file = PATH + "/game_list_no_console"
 
     with open(name_of_file, 'wb') as filehandle:
         pickle.dump(game_list, filehandle)
+
+    print("Saved data file at " + name_of_file)
 
 
 def read_list(has_console=False):
     game_list = []
     if has_console:
-        name_of_file = "game_list.txt"
+        name_of_file = (PATH + "/game_list")
     else:
-        name_of_file = "game_list_no_console.txt"
+        name_of_file = PATH + "/game_list_no_console"
     try:
         with open(name_of_file, 'rb') as filehandle:
             game_list = pickle.load(filehandle)
@@ -62,3 +66,5 @@ if __name__ == '__main__':
     games = read_list(True)
     table = parse_table(games)
     print(table)
+else:
+    PATH += "/src"
