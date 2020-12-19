@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import re
 import random
 import time
+from src import reddit_table
 
 
 class Scraper:
@@ -93,6 +94,8 @@ class Scraper:
             self.click_next_page()
 
         self.driver.close()
+        reddit_table.write_list(self.list_of_games, True)
+        reddit_table.write_list(self.list_of_non_games)
 
     def splitStringByNewlines(self, text):
         return text.splitlines()
