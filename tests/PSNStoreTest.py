@@ -1,4 +1,5 @@
 import unittest
+import time
 import re
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -22,12 +23,29 @@ class PSNStoreTest(unittest.TestCase):
         driver = self.driver
         driver.get(self.link)
         try:
-            WebDriverWait(self.driver, 30).until(
+            WebDriverWait(driver, 30).until(
                 EC.visibility_of_element_located((By.CSS_SELECTOR,
                                                   "#main > section > div > div > ul > li:nth-child(1) > div > a > div > div.ems-sdk-product-tile-image__container > span.psw-illustration.psw-illustration--default-product-image.default-product-img"))
             )
         except TimeoutException:
             self.fail("Web drivevr did not find a game!")
+        finally:
+            time.sleep(3)
+
+    def test_game_properties(self):
+        driver = self.driver
+        driver.get(self.link)
+
+        try:
+            WebDriverWait(driver, 30).until(
+                EC.visibility_of_element_located(
+                    (By.CSS_SELECTOR, "#main > section > div > div > ul > li:nth-child(1) > div > a > section")
+                )
+            )
+        except TimeoutException:
+            self.fail("Unable to locate game properties")
+
+    
 
     def tearDown(self) -> None:
         self.driver.close()
