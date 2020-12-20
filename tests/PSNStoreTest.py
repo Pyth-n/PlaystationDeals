@@ -45,7 +45,12 @@ class PSNStoreTest(unittest.TestCase):
         except TimeoutException:
             self.fail("Unable to locate game properties")
 
-    
+    def test_game_list_length(self):
+        driver = self.driver
+        driver.get(self.link)
+
+        elements = driver.find_elements_by_css_selector("#main > section > div > div > ul > li")
+        self.assertTrue(len(elements) > 0)
 
     def tearDown(self) -> None:
         self.driver.close()
