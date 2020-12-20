@@ -22,7 +22,6 @@ class Scraper:
     def start(self):
         self.driver = webdriver.Chrome(self.pathToBrowserDriver)
         self.driver.get("https://store.playstation.com/en-us/category/35027334-375e-423b-b500-0d4d85eff784/1")
-        assert "Official PlayStation™Store US" in self.driver.title
         self.driver.implicitly_wait(15)
 
         while True:
