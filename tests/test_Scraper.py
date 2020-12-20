@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Scraper import Scraper
+from src.Scraper import Scraper
 from selenium import webdriver
 
 class TestScraper(TestCase):
