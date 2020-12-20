@@ -1,6 +1,6 @@
 from unittest import TestCase
 from src.Scraper import Scraper
-from selenium import webdriver
+
 
 class TestScraper(TestCase):
     def setUp(self) -> None:
