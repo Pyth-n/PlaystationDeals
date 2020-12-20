@@ -65,12 +65,3 @@ class TestScraper(TestCase):
         self.assertFalse(self.scraper.has_discount(text2))
         self.assertFalse(self.scraper.has_discount(text3))
         self.assertTrue(self.scraper.has_discount(text4))
-
-    # def test_is_next_page_enabled(self):
-    #     driver = webdriver.Chrome("/Users/perez/Desktop/PlayStationDeals/src/chromedriver")
-    #     driver.get("https://store.playstation.com/en-us/category/497544f5-a512-4d08-95a3-dbf798e24bc9/1")
-    #
-    #     element = driver.find_element_by_css_selector("#main > section > div > div > div > div > div > button:nth-child(1):disabled")
-    #
-    #     self.assertIsNotNone(element)
-    #     driver.close()
