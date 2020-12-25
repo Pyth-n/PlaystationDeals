@@ -12,8 +12,9 @@ from src import reddit_table
 class Scraper:
     pathToBrowserDriver = "/Users/perez/Desktop/PlayStationDeals/src/chromedriver"
 
-    def __init__(self):
+    def __init__(self, url):
         self.driver = None
+        self.url = url
         self.list_of_games = []
         self.list_of_non_games = []
         self.next_page_button_enabled = False
@@ -21,7 +22,7 @@ class Scraper:
 
     def start(self):
         self.driver = webdriver.Chrome(self.pathToBrowserDriver)
-        self.driver.get("https://store.playstation.com/en-us/category/e29a2213-2e1c-4bbe-a24b-c0eb2e1c24e7/1")
+        self.driver.get(self.url)
         self.driver.implicitly_wait(15)
 
         while True:
