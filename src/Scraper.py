@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import re
 import random
 import time
+from decimal import Decimal
 from src import reddit_table
 
 
@@ -77,9 +78,9 @@ class Scraper:
                     game_list.append(consoles)
 
                 game_list.append(title)
-                game_list.append(split_text[-3])
-                game_list.append(split_text[-2])
-                game_list.append(split_text[-1])
+                game_list.append(self.strip_money_string(split_text[-3]))
+                game_list.append(self.strip_money_string(split_text[-2]))
+                game_list.append(self.strip_money_string(split_text[-1]))
 
                 if not non_game:
                     self.list_of_games.append(game_list)
@@ -162,3 +163,6 @@ class Scraper:
     def click_next_page(self):
         self.driver.find_element_by_css_selector(
             "#main > section > div > div > div > div > div > button:nth-child(3)").click()
+
+    def strip_money_string(self, value):
+        return Decimal(re.sub(r'[^\d\-.]', '', value))

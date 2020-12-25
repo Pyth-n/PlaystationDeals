@@ -2,6 +2,8 @@
 # [[N]?, String, String, String, String]
 import pickle
 import os
+from decimal import Decimal
+
 PATH = os.getcwd()
 
 
@@ -40,8 +42,8 @@ def parse_table(game_list):
     if type(game_list[0][0]) == type([]):
         has_console = True
 
-    table = "Title|Discount %|Sale $|Retail $|Console"
-    table_alignment = ":--|:--|:--|:--|:--"
+    table = "Title|Dollars Off|%|Sale|Retail|Console"
+    table_alignment = ":--|:--|:--|:--|:--|:--"
     rows = ""
 
     for game in game_list:
@@ -58,7 +60,8 @@ def parse_table(game_list):
             retail = game[3]
             console = "N/A"
 
-        rows += title + "|" + discount + "|" + sale + "|" + retail + "|" + console + "\n"
+        dollars_saved = retail - sale
+        rows += title + "|$" + str(dollars_saved) + "|" + str(discount) + "%|$" + str(sale) + "|$" + str(retail) + "|" + str(console) + "\n"
     text_block = table + '\n' + table_alignment + '\n' + rows
     return text_block
 
@@ -81,7 +84,7 @@ def __sort_list_by_percent(game_list, hasConsole=False):
     else:
         index = 1
 
-    return sorted(game_list, key = lambda game_list: game_list[index], reverse=True)
+    return sorted(game_list, key = lambda game_list: game_list[index])
 
 
 if __name__ == '__main__':
