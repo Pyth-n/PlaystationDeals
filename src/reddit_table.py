@@ -49,18 +49,20 @@ def parse_table(game_list):
     for game in game_list:
         if has_console:
             title = game[1]
-            discount = game[2]
-            sale = game[3]
-            retail = game[4]
+            dollars_saved = game[2]
+            discount = game[3]
+            sale = game[4]
+            retail = game[5]
             console = ', '.join(game[0])
         else:
             title = game[0]
-            discount = game[1]
-            sale = game[2]
-            retail = game[3]
+            dollars_saved = game[1]
+            discount = game[2]
+            sale = game[3]
+            retail = game[4]
             console = "N/A"
 
-        dollars_saved = retail - sale
+        # = retail - sale
         rows += title + "|$" + str(dollars_saved) + "|" + str(discount) + "%|$" + str(sale) + "|$" + str(retail) + "|" + str(console) + "\n"
     text_block = table + '\n' + table_alignment + '\n' + rows
     return text_block
@@ -84,7 +86,7 @@ def __sort_list_by_percent(game_list, hasConsole=False):
     else:
         index = 1
 
-    return sorted(game_list, key = lambda game_list: game_list[index])
+    return sorted(game_list, key = lambda game_list: game_list[index], reverse=True)
 
 
 if __name__ == '__main__':

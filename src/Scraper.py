@@ -78,9 +78,16 @@ class Scraper:
                     game_list.append(consoles)
 
                 game_list.append(title)
-                game_list.append(self.strip_money_string(split_text[-3]))
-                game_list.append(self.strip_money_string(split_text[-2]))
-                game_list.append(self.strip_money_string(split_text[-1]))
+                discount = self.strip_money_string(split_text[-3])
+                sale = self.strip_money_string(split_text[-2])
+                retail = self.strip_money_string(split_text[-1])
+
+                dollars_saved = retail - sale
+
+                game_list.append(dollars_saved)
+                game_list.append(discount)
+                game_list.append(sale)
+                game_list.append(retail)
 
                 if not non_game:
                     self.list_of_games.append(game_list)
