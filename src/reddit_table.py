@@ -2,7 +2,7 @@
 # [[N]?, String, String, String, String]
 import pickle
 import os
-from decimal import Decimal
+from pathlib import Path
 
 PATH = os.getcwd()
 
@@ -45,6 +45,8 @@ def parse_table(game_list):
     table = "Title|Dollars Off|%|Sale|Retail|Console"
     table_alignment = ":--|:--|:--|:--|:--|:--"
     rows = ""
+    rows_list = []
+    character_count = 0
 
     for game in game_list:
         if has_console:
@@ -62,22 +64,35 @@ def parse_table(game_list):
             retail = game[4]
             console = "N/A"
 
-        # = retail - sale
-        rows += title + "|$" + str(dollars_saved) + "|" + str(discount) + "%|$" + str(sale) + "|$" + str(retail) + "|" + str(console) + "\n"
-    text_block = table + '\n' + table_alignment + '\n' + rows
-    return text_block
+        rows += title + "|$" + str(dollars_saved) + "|" + str(discount) + "%|$" + str(sale) + "|$" + str(
+            retail) + "|" + str(console) + "\n"
+
+        character_count += len(title + "|$" + str(dollars_saved) + "|" + str(discount) + "%|$" + str(sale) + "|$" + str(retail) + "|" + str(console) + "\n")
+        if character_count > 9800:
+            text_block = table + '\n' + table_alignment + '\n' + rows
+            rows = ""
+            character_count = 0
+            rows_list.append(text_block)
+    return rows_list
 
 
-def __write_text_table(table, has_console=False):
-    if has_console:
-        file_to_write = PATH + "/table.txt"
+def __write_text_table(table_list, has_console=False):
+    for p in Path(PATH).glob("table*.txt"):
+        os.remove(p)
+
+    for i, table in enumerate(table_list):
+        file_name = __get_write_name(i, has_console)
+        with open(file_name, "w") as text_file:
+            text_file.write("%s" % table)
+
+        print("Saved reddit table at " + file_name)
+
+
+def __get_write_name(number, hasConsole):
+    if hasConsole:
+        return PATH + f'/table{number}.txt'
     else:
-        file_to_write = PATH + "/table_no_console.txt"
-
-    with open(file_to_write, "w") as text_file:
-        text_file.write("%s" % table)
-
-    print("Saved reddit table at " + file_to_write)
+        return PATH + f'/table_no_console{number}.txt'
 
 
 def __sort_list_by_percent(game_list, hasConsole=False):
