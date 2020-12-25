@@ -13,7 +13,7 @@ class PSNStoreTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.driver = webdriver.Chrome(self.pathToBrowserDriver)
-        self.link = "https://store.playstation.com/en-us/category/35027334-375e-423b-b500-0d4d85eff784/1"
+        self.link = "https://store.playstation.com/en-us/category/e29a2213-2e1c-4bbe-a24b-c0eb2e1c24e7/1"
 
     def test_url(self):
         is_valid = re.findall("store\.playstation\.com\/en-us\/category\/([A-z0-9]{8})-([A-z0-9]{4})-([A-z0-9]{4})-([A-z0-9]{4})-([A-z0-9]{12})", self.link)
