@@ -2,7 +2,7 @@
 # [[N]?, String, String, String, String]
 import pickle
 import os
-from decimal import Decimal
+from pathlib import Path
 
 PATH = os.getcwd()
 
@@ -69,6 +69,8 @@ def parse_table(game_list):
 
 
 def __write_text_table(table, has_console=False):
+    for p in Path(PATH).glob("table*.txt"):
+        os.remove(p)
     if has_console:
         file_to_write = PATH + "/table.txt"
     else:
